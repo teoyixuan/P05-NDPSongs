@@ -78,6 +78,7 @@ public class ThirdActivity extends AppCompatActivity {
 
                 Toast.makeText(ThirdActivity.this, "Sound Updated",
                         Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -98,7 +99,7 @@ public class ThirdActivity extends AppCompatActivity {
 
                 Toast.makeText(ThirdActivity.this, "Song Deleted",
                         Toast.LENGTH_SHORT).show();
-                
+                setResult(RESULT_OK);
                 finish();
             }
         });
