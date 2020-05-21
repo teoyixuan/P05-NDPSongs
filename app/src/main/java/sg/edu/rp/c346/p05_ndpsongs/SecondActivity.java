@@ -28,10 +28,17 @@ public class SecondActivity extends AppCompatActivity {
         btnShowList = findViewById(R.id.btnShowList);
         al = new ArrayList<Song>();
 
+        DBHelper db = new DBHelper(SecondActivity.this);
+        al = db.getAllSongs();
+        db.close();
+        aa = new arrayAdapter(SecondActivity.this, R.layout.row, al);
+        lv.setAdapter(aa);
+
         btnShowList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DBHelper db = new DBHelper(SecondActivity.this);
+                al.clear();
                 al = db.getSong();
                 db.close();
 
@@ -58,7 +65,12 @@ public class SecondActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == 9) {
-            btnShowList.performClick();
+            DBHelper db = new DBHelper(SecondActivity.this);
+            al.clear();
+            al = db.getAllSongs();
+            db.close();
+            aa = new arrayAdapter(SecondActivity.this, R.layout.row, al);
+            lv.setAdapter(aa);
         }
     }
 }

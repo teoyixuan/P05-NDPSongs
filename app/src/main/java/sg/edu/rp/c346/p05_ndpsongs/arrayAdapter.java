@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -15,6 +16,7 @@ public class arrayAdapter extends ArrayAdapter<Song> {
     private ArrayList<Song> songs;
     private Context context;
     private TextView tvYear, tvTitle, tvSinger;
+    private ImageView iv1, iv2, iv3, iv4, iv5;
 
     public arrayAdapter(Context context, int resource, ArrayList<Song> objects) {
         super(context, resource, objects);
@@ -39,8 +41,11 @@ public class arrayAdapter extends ArrayAdapter<Song> {
         tvYear = (TextView) rowView.findViewById(R.id.tvYear);
         tvTitle = (TextView) rowView.findViewById(R.id.tvTitle);
         tvSinger = (TextView) rowView.findViewById(R.id.tvSinger);
-
-
+        iv5 = (ImageView) rowView.findViewById(R.id.imageView6);
+        iv1 = (ImageView) rowView.findViewById(R.id.imageView2);
+        iv2 = (ImageView) rowView.findViewById(R.id.imageView3);
+        iv3 = (ImageView) rowView.findViewById(R.id.imageView4);
+        iv4 = (ImageView) rowView.findViewById(R.id.imageView5);
 
         // The parameter "position" is the index of the
         //  row ListView is requesting.
@@ -52,6 +57,39 @@ public class arrayAdapter extends ArrayAdapter<Song> {
         tvYear.setText(current.getYear() + "");
         tvTitle.setText(current.getTitle());
         tvSinger.setText(current.getSingers());
+
+        int stars = current.getStars();
+        if (stars == 5) {
+            iv5.setImageResource(android.R.drawable.btn_star_big_on);
+            iv4.setImageResource(android.R.drawable.btn_star_big_on);
+            iv3.setImageResource(android.R.drawable.btn_star_big_on);
+            iv2.setImageResource(android.R.drawable.btn_star_big_on);
+            iv1.setImageResource(android.R.drawable.btn_star_big_on);
+        } else if (stars == 4) {
+            iv5.setImageResource(android.R.drawable.btn_star_big_off);
+            iv4.setImageResource(android.R.drawable.btn_star_big_on);
+            iv3.setImageResource(android.R.drawable.btn_star_big_on);
+            iv2.setImageResource(android.R.drawable.btn_star_big_on);
+            iv1.setImageResource(android.R.drawable.btn_star_big_on);
+        } else if (stars == 3){
+            iv5.setImageResource(android.R.drawable.btn_star_big_off);
+            iv4.setImageResource(android.R.drawable.btn_star_big_off);
+            iv3.setImageResource(android.R.drawable.btn_star_big_on);
+            iv2.setImageResource(android.R.drawable.btn_star_big_on);
+            iv1.setImageResource(android.R.drawable.btn_star_big_on);
+        } else if (stars == 2){
+            iv5.setImageResource(android.R.drawable.btn_star_big_off);
+            iv4.setImageResource(android.R.drawable.btn_star_big_off);
+            iv3.setImageResource(android.R.drawable.btn_star_big_off);
+            iv2.setImageResource(android.R.drawable.btn_star_big_on);
+            iv1.setImageResource(android.R.drawable.btn_star_big_on);
+        } else if (stars == 1){
+            iv5.setImageResource(android.R.drawable.btn_star_big_off);
+            iv4.setImageResource(android.R.drawable.btn_star_big_off);
+            iv3.setImageResource(android.R.drawable.btn_star_big_off);
+            iv2.setImageResource(android.R.drawable.btn_star_big_off);
+            iv1.setImageResource(android.R.drawable.btn_star_big_on);
+        }
 
         // Return the nicely done up View to the ListView
         return rowView;
