@@ -143,7 +143,57 @@ public class DBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public ArrayList<String> getAllYears(){
+        ArrayList<String> years = new ArrayList<String>();
+        String selectQuery = "SELECT " + COLUMN_YEAR + " FROM " + TABLE_SONG;
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // moveToFirst() moves to first row
+        if (cursor.moveToFirst()) {
+            // Loop while moveToNext() points to next row and returns true;
+            // moveToNext() returns false when no more next row to move to
+            do {
+                years.add(cursor.getString(0));
+
+            } while (cursor.moveToNext());
+        }
+        // Close connection
+        cursor.close();
+        db.close();
+        return years;
+    }
+
+    public ArrayList<Song> getSongBasedYears(int year){
+        ArrayList<Song> notes = new ArrayList<Song>();
+        String selectQuery = "SELECT " + COLUMN_ID + ","
+                + COLUMN_TITLE + ","
+                + COLUMN_SINGERS + ","
+                + COLUMN_YEAR + ","
+                + COLUMN_STARS + "  FROM " + TABLE_SONG + " WHERE " + COLUMN_YEAR + " == " + year;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // moveToFirst() moves to first row
+        if (cursor.moveToFirst()) {
+            // Loop while moveToNext() points to next row and returns true;
+            // moveToNext() returns false when no more next row to move to
+            do {
+                int id = cursor.getInt(0);
+                String title = cursor.getString(1);
+                String singers = cursor.getString(2);
+                int star = cursor.getInt(4);
+
+                Song song = new Song(id, title,singers,year,star);
+                notes.add(song);
+
+            } while (cursor.moveToNext());
+        }
+        // Close connection
+        cursor.close();
+        db.close();
+
+        return notes;
+    }
 
     public ArrayList<Song> getAllSong(String keyword) {
         ArrayList<Song> notes = new ArrayList<Song>();
